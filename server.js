@@ -53,8 +53,8 @@ const httpsOptions = {
   cert: fs.readFileSync("./192.168.1.223.pem"),
 };
 
-app.listen(port, () => {
+https.createServer(httpsOptions, app).listen(port, () => {
   console.log(
-    `✅ Spotify server HTTP in ascolto su http://192.168.1.223:${port}`
+    `✅ Spotify server HTTPS in ascolto su https://192.168.1.223:${port}`
   );
 });
