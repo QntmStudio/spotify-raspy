@@ -9,9 +9,14 @@ const port = 3001;
 
 const CLIENT_ID = "bbb5aeca9dc44461bd8155c143a25d2c";
 const CLIENT_SECRET = "dd986e144d834f1188ce4448fba101d5";
-const REDIRECT_URI = "https://192.168.1.169:3000/callback";  // <-- qui
+const REDIRECT_URI = "https://192.168.1.169:3000/callback"; // <-- qui
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://192.168.1.169:3000", // indirizzo frontend
+    credentials: true,
+  })
+);
 
 app.get("/spotify/exchange", async (req, res) => {
   const code = req.query.code;
@@ -21,7 +26,7 @@ app.get("/spotify/exchange", async (req, res) => {
     const params = new URLSearchParams();
     params.append("grant_type", "authorization_code");
     params.append("code", code);
-    params.append("redirect_uri", REDIRECT_URI);  // usa redirect_uri frontend
+    params.append("redirect_uri", REDIRECT_URI); // usa redirect_uri frontend
     params.append("client_id", CLIENT_ID);
     params.append("client_secret", CLIENT_SECRET);
 
@@ -49,5 +54,7 @@ const httpsOptions = {
 };
 
 https.createServer(httpsOptions, app).listen(port, () => {
-  console.log(`✅ Spotify server HTTPS in ascolto su https://192.168.1.169:${port}`);
+  console.log(
+    `✅ Spotify server HTTPS in ascolto su https://192.168.1.169:${port}`
+  );
 });
