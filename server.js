@@ -49,8 +49,8 @@ app.get("/spotify/exchange", async (req, res) => {
 });
 
 const httpsOptions = {
-  key: fs.readFileSync("./192.168.1.169-key.pem"),
-  cert: fs.readFileSync("./192.168.1.169.pem"),
+  key: fs.readFileSync("./192.168.1.223-key.pem"),
+  cert: fs.readFileSync("./192.168.1.223.pem"),
 };
 
 app.listen(port, () => {
