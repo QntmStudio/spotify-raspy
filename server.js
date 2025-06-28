@@ -55,6 +55,6 @@ const httpsOptions = {
 
 https.createServer(httpsOptions, app).listen(port, () => {
   console.log(
-    `✅ Spotify server HTTPS in ascolto su https://192.168.1.169:${port}`
+    `✅ Spotify server HTTPS in ascolto su http://192.168.1.223:${port}`
   );
 });
