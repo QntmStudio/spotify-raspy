@@ -13,7 +13,7 @@ const REDIRECT_URI = "https://192.168.1.223:3000/callback";
 
 app.use(
   cors({
-    origin: "http://192.168.1.223:3000",
+    origin: "https://192.168.1.223:3000",
     credentials: true,
   })
 );
