@@ -9,11 +9,11 @@ const port = 3001;
 
 const CLIENT_ID = "bbb5aeca9dc44461bd8155c143a25d2c";
 const CLIENT_SECRET = "dd986e144d834f1188ce4448fba101d5";
-const REDIRECT_URI = "https://192.168.1.169:3000/callback";
+const REDIRECT_URI = "http://192.168.1.223:3000/callback";
 
 app.use(
   cors({
-    origin: "http://192.168.1.223:3000", // indirizzo frontend
+    origin: "http://192.168.1.223:3000",
     credentials: true,
   })
 );
@@ -53,8 +53,8 @@ const httpsOptions = {
   cert: fs.readFileSync("./192.168.1.169.pem"),
 };
 
-https.createServer(httpsOptions, app).listen(port, () => {
+app.listen(port, () => {
   console.log(
-    `✅ Spotify server HTTPS in ascolto su http://192.168.1.223:${port}`
+    `✅ Spotify server HTTP in ascolto su http://192.168.1.223:${port}`
   );
 });
