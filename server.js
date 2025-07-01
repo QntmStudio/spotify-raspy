@@ -48,6 +48,41 @@ app.get("/spotify/exchange", async (req, res) => {
   }
 });
 
+app.get("/spotify/refresh", async (req, res) => {
+  const refresh_token = req.query.refresh_token;
+  if (!refresh_token) {
+    return res.status(400).json({ error: "Missing refresh_token" });
+  }
+
+  try {
+    const params = new URLSearchParams();
+    params.append("grant_type", "refresh_token");
+    params.append("refresh_token", refresh_token);
+
+    const authHeader = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64");
+
+    const tokenResponse = await axios.post(
+      "https://accounts.spotify.com/api/token",
+      params,
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": `Basic ${authHeader}`,
+        },
+      }
+    );
+
+    res.json({
+      access_token: tokenResponse.data.access_token,
+      expires_in: tokenResponse.data.expires_in,
+    });
+  } catch (err) {
+    console.error("Errore refresh token Spotify:", err.response?.data || err);
+    res.status(500).json({ error: "Errore refresh token" });
+  }
+});
+
+
 const httpsOptions = {
   key: fs.readFileSync("./192.168.1.15-key.pem"),
   cert: fs.readFileSync("./192.168.1.15.pem"),
